@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/hbant/Downloads/baseball-trainer_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚾ Baseball Hero Trainer</title>
+<link href="./⚾ Baseball Hero Trainer_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --red: #E63946;
+    --red-dark: #9B1B25;
+    --yellow: #FFD166;
+    --blue: #118AB2;
+    --blue-light: #73C8E8;
+    --green: #06D6A0;
+    --dark: #1A1A2E;
+    --darker: #0D0D1A;
+    --panel: #16213E;
+    --panel2: #0F3460;
+    --white: #F0F4FF;
+    --gray: #8892B0;
+    --purple: #7B2FBE;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--darker);
+    font-family: 'Nunito', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Pixel star background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 40%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 60%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 75%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 90%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.8) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 24px 0 16px;
+    position: relative;
+  }
+  .header-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(14px, 3vw, 22px);
+    color: var(--yellow);
+    text-shadow: 3px 3px 0 var(--red-dark), 0 0 30px rgba(255,209,102,0.4);
+    line-height: 1.6;
+    letter-spacing: 1px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--blue-light);
+    margin-top: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .pokeball-deco {
+    display: inline-block;
+    font-size: 28px;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .baseball-deco {
+    display: inline-block;
+    font-size: 24px;
+    animation: bob 2s ease-in-out infinite;
+  }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  /* PLAYER CARD */
+  .player-card {
+    background: linear-gradient(135deg, var(--panel) 0%, var(--panel2) 100%);
+    border: 3px solid var(--yellow);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,209,102,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .player-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,209,102,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .player-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .player-avatar {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    border: 3px solid var(--yellow);
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(230,57,70,0.4);
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+  @keyframes glow-pulse {
+    0%,100% { box-shadow: 0 0 20px rgba(230,57,70,0.4); }
+    50% { box-shadow: 0 0 35px rgba(230,57,70,0.7); }
+  }
+  .player-info { flex: 1; min-width: 150px; }
+  .player-name-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--yellow);
+    color: var(--yellow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(10px, 2.5vw, 16px);
+    width: 100%;
+    outline: none;
+    padding: 4px 0;
+    margin-bottom: 6px;
+  }
+  .player-title {
+    color: var(--blue-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .level-badge {
+    background: linear-gradient(135deg, var(--yellow), #FFA500);
+    color: var(--darker);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 900;
+    display: inline-block;
+    margin-top: 6px;
+    box-shadow: 0 2px 8px rgba(255,165,0,0.4);
+  }
+
+  /* XP BAR */
+  .xp-section { margin-top: 16px; }
+  .xp-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .xp-bar-bg {
+    height: 18px;
+    background: var(--darker);
+    border-radius: 9px;
+    border: 2px solid var(--panel2);
+    overflow: hidden;
+    position: relative;
+  }
+  .xp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue-light));
+    border-radius: 9px;
+    transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    box-shadow: 0 0 10px rgba(6,214,160,0.5);
+  }
+  .xp-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border-radius: 12px;
+    padding: 14px;
+    border: 2px solid var(--panel2);
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card:hover { border-color: var(--yellow); transform: translateY(-2px); }
+  .stat-card::before {
+    content: attr(data-emoji);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    opacity: 0.3;
+  }
+  .stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 4vw, 26px);
+    color: var(--yellow);
+  }
+  .stat-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* SKILL BARS */
+  .skill-section {
+    background: var(--panel);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid var(--panel2);
+  }
+  .section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .skill-name {
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 110px;
+    color: var(--white);
+  }
+  .skill-bar-bg {
+    flex: 1;
+    height: 14px;
+    background: var(--darker);
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid var(--panel2);
+  }
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .skill-bar-fill.pop { background: linear-gradient(90deg, #f093fb, #f5576c); }
+  .skill-bar-fill.throw { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+  .skill-bar-fill.speed { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+  .skill-bar-fill.focus { background: linear-gradient(90deg, #fa709a, #fee140); }
+  .skill-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--gray);
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--panel2);
+    background: var(--panel);
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+  .tab-btn.active {
+    background: var(--yellow);
+    color: var(--darker);
+    border-color: var(--yellow);
+    box-shadow: 0 0 15px rgba(255,209,102,0.3);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* TRAINING MISSIONS */
+  .mission-card {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 2px solid var(--panel2);
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .mission-card:hover { border-color: var(--blue-light); transform: translateX(4px); }
+  .mission-card.completed {
+    border-color: var(--green);
+    background: linear-gradient(135deg, var(--panel) 0%, rgba(6,214,160,0.1) 100%);
+  }
+  .mission-card.completed::after {
+    content: '✓ DONE!';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--green);
+  }
+  .mission-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .mission-icon { font-size: 22px; }
+  .mission-title {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--white);
+  }
+  .mission-xp {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: var(--yellow);
+    background: rgba(255,209,102,0.1);
+    border: 1px solid var(--yellow);
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: 50px;
+  }
+  .mission-desc {
+    font-size: 12px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-left: 32px;
+  }
+  .mission-tip {
+    margin-top: 8px;
+    margin-left: 32px;
+    background: rgba(17,138,178,0.2);
+    border-left: 3px solid var(--blue-light);
+    padding: 6px 10px;
+    border-radius: 0 8px 8px 0;
+    font-size: 11px;
+    color: var(--blue-light);
+    font-style: italic;
+  }
+
+  /* LOG SECTION */
+  .log-form {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border: 2px solid var(--panel2);
+  }
+  .log-form h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .drills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .drill-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--darker);
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--panel2);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .drill-check:hover { border-color: var(--blue-light); }
+  .drill-check.checked { border-color: var(--green); background: rgba(6,214,160,0.1); }
+  .drill-check input { display: none; }
+  .drill-emoji { font-size: 18px; }
+  .drill-label { font-size: 11px; font-weight: 700; line-height: 1.3; }
+  .drill-xp-tag {
+    font-size: 9px;
+    color: var(--yellow);
+    font-family: 'Press Start 2P', monospace;
+    margin-left: auto;
+  }
+
+  .rate-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .rate-group { flex: 1; min-width: 120px; }
+  .rate-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .rate-stars { display: flex; gap: 6px; }
+  .star-btn {
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.15s;
+    filter: grayscale(1) brightness(0.5);
+  }
+  .star-btn:hover, .star-btn.lit {
+    filter: none;
+    transform: scale(1.2);
+  }
+
+  .log-btn {
+    width: 100%;
+    padding: 14px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(6,214,160,0.3);
+    letter-spacing: 1px;
+  }
+  .log-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(6,214,160,0.5); }
+  .log-btn:active { transform: translateY(0); }
+
+  /* HISTORY */
+  .history-item {
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border-left: 4px solid var(--green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .history-date { font-size: 11px; color: var(--gray); min-width: 80px; }
+  .history-drills { font-size: 12px; flex: 1; }
+  .history-xp {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: var(--yellow);
+  }
+
+  /* REWARDS */
+  .rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .reward-card {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 16px;
+    border: 2px solid var(--panel2);
+    text-align: center;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .reward-card.unlocked {
+    border-color: var(--yellow);
+    background: linear-gradient(135deg, var(--panel), rgba(255,209,102,0.1));
+  }
+  .reward-card.locked { opacity: 0.5; }
+  .reward-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 50%, rgba(255,209,102,0.05));
+    pointer-events: none;
+  }
+  .reward-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+  .reward-title { font-weight: 900; font-size: 13px; margin-bottom: 4px; }
+  .reward-req {
+    font-size: 10px;
+    color: var(--gray);
+    font-family: 'Press Start 2P', monospace;
+  }
+  .reward-unlocked-badge {
+    display: inline-block;
+    background: var(--green);
+    color: var(--darker);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+  .reward-lock { font-size: 16px; margin-top: 6px; display: block; }
+
+  /* POPUP */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    padding: 20px;
+  }
+  .popup-overlay.show { opacity: 1; pointer-events: all; }
+  .popup {
+    background: linear-gradient(135deg, var(--panel), var(--panel2));
+    border: 3px solid var(--yellow);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 60px rgba(255,209,102,0.3);
+  }
+  .popup-overlay.show .popup { transform: scale(1); }
+  .popup-emoji { font-size: 56px; animation: bounce 0.5s ease infinite alternate; display: block; margin-bottom: 10px; }
+  @keyframes bounce { to { transform: translateY(-10px) rotate(10deg); } }
+  .popup-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: var(--yellow);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .popup-body { font-size: 14px; color: var(--gray); margin-bottom: 16px; line-height: 1.5; }
+  .popup-xp {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: var(--green);
+    margin-bottom: 16px;
+    text-shadow: 0 0 20px rgba(6,214,160,0.5);
+  }
+  .popup-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 12px 24px;
+    background: var(--yellow);
+    color: var(--darker);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .popup-btn:hover { transform: scale(1.05); }
+
+  /* STREAK */
+  .streak-display {
+    background: linear-gradient(135deg, var(--red-dark), var(--red));
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid rgba(255,209,102,0.3);
+  }
+  .streak-fire { font-size: 28px; animation: flicker 0.8s ease-in-out infinite alternate; }
+  @keyframes flicker { 0%{transform:scale(1) rotate(-5deg)} 100%{transform:scale(1.1) rotate(5deg)} }
+  .streak-info { flex: 1; }
+  .streak-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    color: var(--yellow);
+  }
+  .streak-label { font-size: 11px; color: rgba(255,255,255,0.7); }
+
+  /* Weekly calendar */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .week-day {
+    text-align: center;
+    background: var(--darker);
+    border-radius: 8px;
+    padding: 8px 4px;
+    border: 2px solid var(--panel2);
+  }
+  .week-day.done { border-color: var(--green); background: rgba(6,214,160,0.15); }
+  .week-day-name { font-size: 9px; color: var(--gray); font-weight: 700; margin-bottom: 4px; }
+  .week-day-icon { font-size: 14px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--gray);
+    font-size: 13px;
+  }
+  .empty-state .big-emoji { font-size: 40px; margin-bottom: 10px; display: block; }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .mission-xp { margin-right: 10px; }
+    .mission-card.completed::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <span class="baseball-deco">⚾</span>
+      <span class="pokeball-deco">🔴</span>
+      <span class="baseball-deco" style="animation-delay:0.5s">⚾</span>
+    </div>
+    <div class="header-title">BASEBALL HERO<br>TRAINER</div>
+    <div class="header-sub">⚡ Center Field Champion Quest ⚡</div>
+  </div>
+
+  <!-- PLAYER CARD -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="player-avatar" id="avatarDisplay">⚾</div>
+      <div class="player-info">
+        <input class="player-name-input" id="playerName" value="YOUR NAME" maxlength="16" placeholder="YOUR NAME">
+        <div class="player-title">⭐ Center Field Hero</div>
+        <div class="level-badge" id="levelBadge">LVL 1 — ROOKIE</div>
+      </div>
+    </div>
+    <div class="xp-section">
+      <div class="xp-label">
+        <span>🌟 XP Points</span>
+        <span id="xpLabel">15 / 100 XP</span>
+      </div>
+      <div class="xp-bar-bg">
+        <div class="xp-bar-fill" id="xpBar" style="width: 15%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card" data-emoji="🏆">
+      <div class="stat-label">Total XP</div>
+      <div class="stat-value" id="totalXP">15</div>
+      <div class="stat-sub">Keep going!</div>
+    </div>
+    <div class="stat-card" data-emoji="📅">
+      <div class="stat-label">Sessions</div>
+      <div class="stat-value" id="sessionCount">0</div>
+      <div class="stat-sub">Training days</div>
+    </div>
+  </div>
+
+  <!-- STREAK -->
+  <div class="streak-display">
+    <div class="streak-fire">🔥</div>
+    <div class="streak-info">
+      <div class="streak-num" id="streakNum">0</div>
+      <div class="streak-label">DAY STREAK — Train daily to keep it alive!</div>
+    </div>
+    <div style="font-size:24px">⚡</div>
+  </div>
+
+  <!-- WEEK GRID -->
+  <div class="week-grid" id="weekGrid">
+    <div class="week-day ">
+      <div class="week-day-name">SUN</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">MON</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">TUE</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">WED</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">THU</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">FRI</div>
+      <div class="week-day-icon">⬜</div>
+    </div>
+  
+    <div class="week-day ">
+      <div class="week-day-name">SAT</div>
+      <div class="week-day-icon">⚾</div>
+    </div>
+  </div>
+
+  <!-- SKILL BARS -->
+  <div class="skill-section">
+    <div class="section-title">⚔️ YOUR SKILLS</div>
+    <div class="skill-row">
+      <div class="skill-name">🎯 Pop Fly Catch</div>
+      <div class="skill-bar-bg"><div class="skill-bar-fill pop" id="skillPop" style="width:0%"></div></div>
+      <div class="skill-num" id="skillPopNum">0</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-name">💪 Field Throw</div>
+      <div class="skill-bar-bg"><div class="skill-bar-fill throw" id="skillThrow" style="width:0%"></div></div>
+      <div class="skill-num" id="skillThrowNum">0</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-name">⚡ Speed</div>
+      <div class="skill-bar-bg"><div class="skill-bar-fill speed" id="skillSpeed" style="width:0%"></div></div>
+      <div class="skill-num" id="skillSpeedNum">0</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-name">🧠 Focus</div>
+      <div class="skill-bar-bg"><div class="skill-bar-fill focus" id="skillFocus" style="width: 8%;"></div></div>
+      <div class="skill-num" id="skillFocusNum">8</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(&#39;missions&#39;)">🗺️ MISSIONS</button>
+    <button class="tab-btn" onclick="switchTab(&#39;log&#39;)">📝 LOG SESSION</button>
+    <button class="tab-btn" onclick="switchTab(&#39;history&#39;)">📊 HISTORY</button>
+    <button class="tab-btn" onclick="switchTab(&#39;rewards&#39;)">🏆 REWARDS</button>
+  </div>
+
+  <!-- TAB: MISSIONS -->
+  <div class="tab-content active" id="tab-missions">
+
+    <div style="margin-bottom:10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+      🎯 POP FLY MISSIONS
+    </div>
+
+    <div class="mission-card" id="m1" onclick="completeMission(&#39;m1&#39;, 20, &#39;pop&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">👀</span>
+        <span class="mission-title">Track the Ball</span>
+        <span class="mission-xp">+20 XP</span>
+      </div>
+      <div class="mission-desc">Toss a ball straight up 10 times. Watch it the whole way up AND all the way back down. Catch it each time!</div>
+      <div class="mission-tip">💡 Tip: Keep your eyes on the ball like a Pokémon Trainer locked onto a battle!</div>
+    </div>
+
+    <div class="mission-card" id="m2" onclick="completeMission(&#39;m2&#39;, 25, &#39;pop&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">🏃</span>
+        <span class="mission-title">Move Your Feet!</span>
+        <span class="mission-xp">+25 XP</span>
+      </div>
+      <div class="mission-desc">Have someone throw 10 pop flies to different spots. Focus on moving your feet fast to get under the ball BEFORE it arrives.</div>
+      <div class="mission-tip">💡 Tip: Get there early — like arriving at the Pokémon Center before you need it!</div>
+    </div>
+
+    <div class="mission-card" id="m3" onclick="completeMission(&#39;m3&#39;, 30, &#39;pop&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">☀️</span>
+        <span class="mission-title">Sun Blinder Challenge</span>
+        <span class="mission-xp">+30 XP</span>
+      </div>
+      <div class="mission-desc">Practice catching 5 pop flies while using your glove to shade the sun. This is a CENTER FIELD secret weapon!</div>
+      <div class="mission-tip">💡 Tip: Use your glove hand like a visor. Pro move right here!</div>
+    </div>
+
+    <div style="margin: 16px 0 10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+      💪 THROWING MISSIONS
+    </div>
+
+    <div class="mission-card" id="m4" onclick="completeMission(&#39;m4&#39;, 20, &#39;throw&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">🎯</span>
+        <span class="mission-title">Target Practice</span>
+        <span class="mission-xp">+20 XP</span>
+      </div>
+      <div class="mission-desc">Throw 15 times at a target (a wall, fence, or a bucket). Try to hit the same spot 3 times in a row!</div>
+      <div class="mission-tip">💡 Tip: Step toward your target as you throw — like lunging in a Pokémon battle!</div>
+    </div>
+
+    <div class="mission-card" id="m5" onclick="completeMission(&#39;m5&#39;, 25, &#39;throw&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">🔁</span>
+        <span class="mission-title">Quick Release Drill</span>
+        <span class="mission-xp">+25 XP</span>
+      </div>
+      <div class="mission-desc">Catch a toss, then throw it back as FAST as you can 10 times. Pretend you're throwing a runner out at home plate!</div>
+      <div class="mission-tip">💡 Tip: As soon as you catch it, move your arm back — no waiting!</div>
+    </div>
+
+    <div class="mission-card" id="m6" onclick="completeMission(&#39;m6&#39;, 35, &#39;throw&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">💥</span>
+        <span class="mission-title">Long Bomb!</span>
+        <span class="mission-xp">+35 XP</span>
+      </div>
+      <div class="mission-desc">Practice throwing from deep center field distance (ask a grown-up to help set up). Throw 8 times — aim for accuracy over power!</div>
+      <div class="mission-tip">💡 Tip: Use your whole body, not just your arm. Rotate like a spinning top!</div>
+    </div>
+
+    <div style="margin: 16px 0 10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+      🌟 BONUS MISSIONS
+    </div>
+
+    <div class="mission-card completed" id="m7" onclick="completeMission(&#39;m7&#39;, 15, &#39;focus&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">🧘</span>
+        <span class="mission-title">Breathe &amp; Focus</span>
+        <span class="mission-xp">+15 XP</span>
+      </div>
+      <div class="mission-desc">Before practice, do 5 deep breaths. Breathe in for 4 counts, out for 4. This powers up your FOCUS stat!</div>
+      <div class="mission-tip">💡 Tip: Even pro players use breathing to calm down before a big catch!</div>
+    </div>
+
+    <div class="mission-card" id="m8" onclick="completeMission(&#39;m8&#39;, 20, &#39;speed&#39;)">
+      <div class="mission-header">
+        <span class="mission-icon">⚡</span>
+        <span class="mission-title">Outfield Sprint</span>
+        <span class="mission-xp">+20 XP</span>
+      </div>
+      <div class="mission-desc">Sprint from one foul line to the other 4 times. Fast feet = fast fielder! Time yourself and try to beat your record!</div>
+      <div class="mission-tip">💡 Tip: Pump your arms — your legs follow where your arms go!</div>
+    </div>
+
+  </div>
+
+  <!-- TAB: LOG SESSION -->
+  <div class="tab-content" id="tab-log">
+    <div class="log-form">
+      <h3>📝 LOG TODAY'S TRAINING</h3>
+      <div style="font-size:12px; color:var(--gray); margin-bottom:14px;">Check off every drill you completed today!</div>
+
+      <div class="drills-grid" id="drillsGrid">
+    <div class="drill-check" id="dc-d1" onclick="toggleDrill(&#39;d1&#39;)">
+      <span class="drill-emoji">👀</span>
+      <span class="drill-label">Ball Tracking (10x)</span>
+      <span class="drill-xp-tag">+15</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d2" onclick="toggleDrill(&#39;d2&#39;)">
+      <span class="drill-emoji">🏃</span>
+      <span class="drill-label">Move Your Feet (10x)</span>
+      <span class="drill-xp-tag">+15</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d3" onclick="toggleDrill(&#39;d3&#39;)">
+      <span class="drill-emoji">☀️</span>
+      <span class="drill-label">Sun Shade Catch (5x)</span>
+      <span class="drill-xp-tag">+10</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d4" onclick="toggleDrill(&#39;d4&#39;)">
+      <span class="drill-emoji">🎯</span>
+      <span class="drill-label">Target Practice (15x)</span>
+      <span class="drill-xp-tag">+15</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d5" onclick="toggleDrill(&#39;d5&#39;)">
+      <span class="drill-emoji">🔁</span>
+      <span class="drill-label">Quick Release (10x)</span>
+      <span class="drill-xp-tag">+15</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d6" onclick="toggleDrill(&#39;d6&#39;)">
+      <span class="drill-emoji">💥</span>
+      <span class="drill-label">Long Bomb Throws (8x)</span>
+      <span class="drill-xp-tag">+20</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d7" onclick="toggleDrill(&#39;d7&#39;)">
+      <span class="drill-emoji">⚡</span>
+      <span class="drill-label">Outfield Sprints (4x)</span>
+      <span class="drill-xp-tag">+10</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d8" onclick="toggleDrill(&#39;d8&#39;)">
+      <span class="drill-emoji">🧘</span>
+      <span class="drill-label">Breathing Focus (5x)</span>
+      <span class="drill-xp-tag">+5</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d9" onclick="toggleDrill(&#39;d9&#39;)">
+      <span class="drill-emoji">🤸</span>
+      <span class="drill-label">Warm-Up Stretches</span>
+      <span class="drill-xp-tag">+5</span>
+    </div>
+  
+    <div class="drill-check" id="dc-d10" onclick="toggleDrill(&#39;d10&#39;)">
+      <span class="drill-emoji">📖</span>
+      <span class="drill-label">Watch Game Film</span>
+      <span class="drill-xp-tag">+10</span>
+    </div>
+  </div>
+
+      <div class="rate-row">
+        <div class="rate-group">
+          <label>Pop Fly Catches</label>
+          <div class="rate-stars" id="stars-pop">
+      <span class="star-btn" onclick="setStar(&#39;pop&#39;,1)" id="star-pop-1">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;pop&#39;,2)" id="star-pop-2">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;pop&#39;,3)" id="star-pop-3">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;pop&#39;,4)" id="star-pop-4">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;pop&#39;,5)" id="star-pop-5">⭐</span>
+    </div>
+        </div>
+        <div class="rate-group">
+          <label>Throwing Accuracy</label>
+          <div class="rate-stars" id="stars-throw">
+      <span class="star-btn" onclick="setStar(&#39;throw&#39;,1)" id="star-throw-1">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;throw&#39;,2)" id="star-throw-2">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;throw&#39;,3)" id="star-throw-3">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;throw&#39;,4)" id="star-throw-4">⭐</span>
+    
+      <span class="star-btn" onclick="setStar(&#39;throw&#39;,5)" id="star-throw-5">⭐</span>
+    </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:14px;">
+        <label style="font-size:11px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px;">How did you feel today?</label>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;" id="moodRow">
+          <button class="mood-btn" onclick="setMood(this,&#39;😄 Great!&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😄 Great!</button>
+          <button class="mood-btn" onclick="setMood(this,&#39;😐 Okay&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😐 Okay</button>
+          <button class="mood-btn" onclick="setMood(this,&#39;😤 Tough&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😤 Tough</button>
+          <button class="mood-btn" onclick="setMood(this,&#39;🔥 On Fire!&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">🔥 On Fire!</button>
+        </div>
+      </div>
+
+      <button class="log-btn" onclick="logSession()">⚡ SAVE SESSION &amp; EARN XP ⚡</button>
+    </div>
+  </div>
+
+  <!-- TAB: HISTORY -->
+  <div class="tab-content" id="tab-history">
+    <div id="historyList"><div class="empty-state"><span class="big-emoji">📋</span>No sessions yet! Log your first training to see your history here.</div></div>
+  </div>
+
+  <!-- TAB: REWARDS -->
+  <div class="tab-content" id="tab-rewards">
+    <div style="font-size:12px; color:var(--gray); margin-bottom:14px; text-align:center;">
+      Earn XP to unlock awesome rewards! Show these to a parent to claim your prize! 🎁
+    </div>
+    <div class="rewards-grid" id="rewardsGrid">
+      <div class="reward-card locked">
+        <span class="reward-emoji">🎮</span>
+        <div class="reward-title">Game Time!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">30 extra minutes of video games</div>
+        <div class="reward-req">50 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">🍕</span>
+        <div class="reward-title">Pick Dinner!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">You choose what's for dinner</div>
+        <div class="reward-req">100 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">🃏</span>
+        <div class="reward-title">Pokémon Pack!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">One new Pokémon card pack</div>
+        <div class="reward-req">200 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">🎳</span>
+        <div class="reward-title">Fun Day Out!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Choose a family activity</div>
+        <div class="reward-req">300 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">👟</span>
+        <div class="reward-title">New Baseball Gear!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">New cleats or batting gloves</div>
+        <div class="reward-req">500 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">🗾</span>
+        <div class="reward-title">Japanese Night!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Japanese food &amp; a movie night</div>
+        <div class="reward-req">800 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    
+      <div class="reward-card locked">
+        <span class="reward-emoji">🏆</span>
+        <div class="reward-title">CHAMPION REWARD!</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Something HUGE — talk to Mom/Dad!</div>
+        <div class="reward-req">1200 XP</div>
+        <span class="reward-lock">🔒</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <span class="popup-emoji" id="popupEmoji">🎯</span>
+    <div class="popup-title" id="popupTitle">やった！ Yatta! (I did it!)</div>
+    <div class="popup-body" id="popupBody">Mission complete! Tap a mission to mark it done after you finish it in real life.</div>
+    <div class="popup-xp" id="popupXp">+15 XP</div>
+    <button class="popup-btn" onclick="closePopup()">続ける! (KEEP GOING!)</button>
+  </div>
+</div>
+
+<script>
+// ============ STATE ============
+let state = JSON.parse(localStorage.getItem('baseballHero') || 'null') || {
+  name: 'YOUR NAME',
+  totalXP: 0,
+  level: 1,
+  sessions: [],
+  completedMissions: [],
+  streak: 0,
+  lastSessionDate: null,
+  skills: { pop: 0, throw: 0, speed: 0, focus: 0 },
+  weekDone: [false,false,false,false,false,false,false]
+};
+
+const LEVELS = [
+  { xp: 0,   name: 'ROOKIE',       emoji: '⚾' },
+  { xp: 100, name: 'OUTFIELDER',   emoji: '🧤' },
+  { xp: 250, name: 'ALL-STAR',     emoji: '⭐' },
+  { xp: 500, name: 'MVP',          emoji: '🏆' },
+  { xp: 800, name: 'CENTER LEGEND',emoji: '🔥' },
+  { xp: 1200,name: 'BASEBALL HERO',emoji: '🌟' },
+];
+
+const DRILLS = [
+  { id:'d1', emoji:'👀', label:'Ball Tracking (10x)', xp:15, skill:'pop' },
+  { id:'d2', emoji:'🏃', label:'Move Your Feet (10x)', xp:15, skill:'pop' },
+  { id:'d3', emoji:'☀️', label:'Sun Shade Catch (5x)', xp:10, skill:'pop' },
+  { id:'d4', emoji:'🎯', label:'Target Practice (15x)', xp:15, skill:'throw' },
+  { id:'d5', emoji:'🔁', label:'Quick Release (10x)', xp:15, skill:'throw' },
+  { id:'d6', emoji:'💥', label:'Long Bomb Throws (8x)', xp:20, skill:'throw' },
+  { id:'d7', emoji:'⚡', label:'Outfield Sprints (4x)', xp:10, skill:'speed' },
+  { id:'d8', emoji:'🧘', label:'Breathing Focus (5x)', xp:5, skill:'focus' },
+  { id:'d9', emoji:'🤸', label:'Warm-Up Stretches', xp:5, skill:'focus' },
+  { id:'d10',emoji:'📖', label:'Watch Game Film', xp:10, skill:'focus' },
+];
+
+const REWARDS = [
+  { xp:50,   emoji:'🎮', title:'Game Time!',           desc:'30 extra minutes of video games', req:'50 XP' },
+  { xp:100,  emoji:'🍕', title:'Pick Dinner!',          desc:'You choose what\'s for dinner', req:'100 XP' },
+  { xp:200,  emoji:'🃏', title:'Pokémon Pack!',         desc:'One new Pokémon card pack', req:'200 XP' },
+  { xp:300,  emoji:'🎳', title:'Fun Day Out!',           desc:'Choose a family activity', req:'300 XP' },
+  { xp:500,  emoji:'👟', title:'New Baseball Gear!',    desc:'New cleats or batting gloves', req:'500 XP' },
+  { xp:800,  emoji:'🗾', title:'Japanese Night!',       desc:'Japanese food & a movie night', req:'800 XP' },
+  { xp:1200, emoji:'🏆', title:'CHAMPION REWARD!',      desc:'Something HUGE — talk to Mom/Dad!', req:'1200 XP' },
+];
+
+let selectedDrills = new Set();
+let starRatings = { pop: 0, throw: 0 };
+let selectedMood = '';
+
+// ============ INIT ============
+function init() {
+  state.name = state.name || 'YOUR NAME';
+  document.getElementById('playerName').value = state.name;
+  buildDrillsGrid();
+  buildStars();
+  buildWeekGrid();
+  buildRewards();
+  renderHistory();
+  updateUI();
+
+  document.getElementById('playerName').addEventListener('change', e => {
+    state.name = e.target.value || 'HERO';
+    save();
+  });
+
+  // Restore mission completed state
+  state.completedMissions.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('completed');
+  });
+}
+
+function save() { localStorage.setItem('baseballHero', JSON.stringify(state)); }
+
+// ============ UI UPDATE ============
+function updateUI() {
+  const lvlData = getLevel();
+  document.getElementById('totalXP').textContent = state.totalXP;
+  document.getElementById('sessionCount').textContent = state.sessions.length;
+  document.getElementById('streakNum').textContent = state.streak;
+  document.getElementById('levelBadge').textContent = `LVL ${lvlData.lvl} — ${lvlData.name}`;
+  document.getElementById('avatarDisplay').textContent = lvlData.emoji;
+  document.getElementById('xpLabel').textContent = `${state.totalXP} / ${lvlData.nextXP} XP`;
+
+  const pct = Math.min(100, ((state.totalXP - lvlData.curXP) / (lvlData.nextXP - lvlData.curXP)) * 100);
+  document.getElementById('xpBar').style.width = pct + '%';
+
+  // Skills (cap at 100)
+  const sp = Math.min(100, state.skills.pop);
+  const st = Math.min(100, state.skills.throw);
+  const ss = Math.min(100, state.skills.speed);
+  const sf = Math.min(100, state.skills.focus);
+  document.getElementById('skillPop').style.width = sp + '%';
+  document.getElementById('skillThrow').style.width = st + '%';
+  document.getElementById('skillSpeed').style.width = ss + '%';
+  document.getElementById('skillFocus').style.width = sf + '%';
+  document.getElementById('skillPopNum').textContent = sp;
+  document.getElementById('skillThrowNum').textContent = st;
+  document.getElementById('skillSpeedNum').textContent = ss;
+  document.getElementById('skillFocusNum').textContent = sf;
+
+  buildRewards();
+}
+
+function getLevel() {
+  let lvl = 1, cur = LEVELS[0], next = LEVELS[1];
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (state.totalXP >= LEVELS[i].xp) {
+      lvl = i + 1;
+      cur = LEVELS[i];
+      next = LEVELS[Math.min(i+1, LEVELS.length-1)];
+      break;
+    }
+  }
+  return { lvl, name: cur.name, emoji: cur.emoji, curXP: cur.xp, nextXP: next.xp };
+}
+
+// ============ DRILLS GRID ============
+function buildDrillsGrid() {
+  const grid = document.getElementById('drillsGrid');
+  grid.innerHTML = DRILLS.map(d => `
+    <div class="drill-check" id="dc-${d.id}" onclick="toggleDrill('${d.id}')">
+      <span class="drill-emoji">${d.emoji}</span>
+      <span class="drill-label">${d.label}</span>
+      <span class="drill-xp-tag">+${d.xp}</span>
+    </div>
+  `).join('');
+}
+
+function toggleDrill(id) {
+  const el = document.getElementById('dc-' + id);
+  if (selectedDrills.has(id)) {
+    selectedDrills.delete(id);
+    el.classList.remove('checked');
+  } else {
+    selectedDrills.add(id);
+    el.classList.add('checked');
+  }
+}
+
+// ============ STARS ============
+function buildStars() {
+  ['pop','throw'].forEach(key => {
+    const container = document.getElementById('stars-' + key);
+    container.innerHTML = [1,2,3,4,5].map(n => `
+      <span class="star-btn" onclick="setStar('${key}',${n})" id="star-${key}-${n}">⭐</span>
+    `).join('');
+  });
+}
+
+function setStar(key, val) {
+  starRatings[key] = val;
+  for (let n = 1; n <= 5; n++) {
+    const el = document.getElementById(`star-${key}-${n}`);
+    if (el) el.classList.toggle('lit', n <= val);
+  }
+}
+
+// ============ MOOD ============
+function setMood(btn, mood) {
+  selectedMood = mood;
+  document.querySelectorAll('.mood-btn').forEach(b => {
+    b.style.borderColor = 'var(--panel2)';
+    b.style.background = 'var(--darker)';
+  });
+  btn.style.borderColor = 'var(--green)';
+  btn.style.background = 'rgba(6,214,160,0.1)';
+}
+
+// ============ LOG SESSION ============
+function logSession() {
+  if (selectedDrills.size === 0) {
+    showPopup('😅', 'OOPS!', 'Check at least one drill before saving!', '+0 XP');
+    return;
+  }
+
+  let xpEarned = 0;
+  let skillGains = { pop:0, throw:0, speed:0, focus:0 };
+
+  selectedDrills.forEach(id => {
+    const drill = DRILLS.find(d => d.id === id);
+    if (drill) {
+      xpEarned += drill.xp;
+      skillGains[drill.skill] = (skillGains[drill.skill] || 0) + drill.xp;
+    }
+  });
+
+  // Star bonuses
+  xpEarned += starRatings.pop * 3;
+  xpEarned += starRatings.throw * 3;
+
+  // Update streak
+  const today = new Date().toDateString();
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (state.lastSessionDate === today) {
+    // already logged today, just update
+  } else if (state.lastSessionDate === yesterday) {
+    state.streak++;
+  } else if (state.lastSessionDate !== today) {
+    state.streak = 1;
+  }
+  state.lastSessionDate = today;
+
+  // Streak bonus
+  if (state.streak >= 3) xpEarned += 10;
+  if (state.streak >= 7) xpEarned += 20;
+
+  // Update skills
+  Object.keys(skillGains).forEach(k => {
+    state.skills[k] = Math.min(100, (state.skills[k] || 0) + Math.round(skillGains[k] / 3));
+  });
+
+  const prevLevel = getLevel().lvl;
+  state.totalXP += xpEarned;
+  const newLevel = getLevel().lvl;
+
+  // Log session
+  const session = {
+    date: new Date().toLocaleDateString(),
+    drills: Array.from(selectedDrills).map(id => DRILLS.find(d => d.id === id)?.emoji).join(' '),
+    xp: xpEarned,
+    mood: selectedMood || '⚾',
+    stars: { ...starRatings }
+  };
+  state.sessions.push(session);
+
+  // Mark today as done in week
+  const dayOfWeek = new Date().getDay();
+  state.weekDone[dayOfWeek] = true;
+
+  save();
+  updateUI();
+  buildWeekGrid();
+  renderHistory();
+
+  // Reset form
+  selectedDrills.clear();
+  selectedMood = '';
+  starRatings = { pop:0, throw:0 };
+  buildDrillsGrid();
+  buildStars();
+  document.querySelectorAll('.mood-btn').forEach(b => {
+    b.style.borderColor = 'var(--panel2)';
+    b.style.background = 'var(--darker)';
+  });
+
+  // Show popup
+  if (newLevel > prevLevel) {
+    const lvl = getLevel();
+    showPopup(lvl.emoji, `LEVEL UP! LVL ${newLevel}!`, `You are now a ${lvl.name}! Keep crushing it!`, `+${xpEarned} XP`);
+  } else {
+    const msgs = [
+      'Sugoi! (すごい!) That means AMAZING in Japanese! 🎉',
+      'Ganbatte! (がんばって!) Keep working hard! 💪',
+      'Great work out there, Center Field Hero! ⚾',
+      'You\'re leveling up your real-life stats! 🌟',
+      state.streak > 1 ? `🔥 ${state.streak} day streak! Incredible!` : 'First step to greatness! Keep it up!'
+    ];
+    showPopup('⚡', 'SESSION SAVED!', msgs[Math.floor(Math.random()*msgs.length)], `+${xpEarned} XP`);
+  }
+}
+
+// ============ MISSIONS ============
+function completeMission(id, xp, skill) {
+  const card = document.getElementById(id);
+  if (!card || card.classList.contains('completed')) return;
+  card.classList.add('completed');
+
+  if (!state.completedMissions.includes(id)) {
+    state.completedMissions.push(id);
+    state.totalXP += xp;
+    state.skills[skill] = Math.min(100, (state.skills[skill] || 0) + Math.round(xp / 2));
+    save();
+    updateUI();
+    const phrases = ['任務完了！ (Mission Complete!)', 'すごい！ Sugoi!', 'やった！ Yatta! (I did it!)', 'がんばった！ Ganbatta!'];
+    showPopup('🎯', phrases[Math.floor(Math.random()*phrases.length)], 'Mission complete! Tap a mission to mark it done after you finish it in real life.', `+${xp} XP`);
+  }
+}
+
+// ============ WEEK GRID ============
+function buildWeekGrid() {
+  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const today = new Date().getDay();
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML = days.map((d, i) => `
+    <div class="week-day ${state.weekDone[i] ? 'done' : ''}">
+      <div class="week-day-name">${d}</div>
+      <div class="week-day-icon">${state.weekDone[i] ? '✅' : (i === today ? '⚾' : '⬜')}</div>
+    </div>
+  `).join('');
+}
+
+// ============ HISTORY ============
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (!state.sessions.length) {
+    list.innerHTML = `<div class="empty-state"><span class="big-emoji">📋</span>No sessions yet! Log your first training to see your history here.</div>`;
+    return;
+  }
+  list.innerHTML = [...state.sessions].reverse().map(s => `
+    <div class="history-item">
+      <div class="history-date">${s.date}</div>
+      <div class="history-drills">${s.drills} ${s.mood}</div>
+      <div class="history-xp">+${s.xp} XP</div>
+    </div>
+  `).join('');
+}
+
+// ============ REWARDS ============
+function buildRewards() {
+  const grid = document.getElementById('rewardsGrid');
+  grid.innerHTML = REWARDS.map(r => {
+    const unlocked = state.totalXP >= r.xp;
+    return `
+      <div class="reward-card ${unlocked ? 'unlocked' : 'locked'}">
+        <span class="reward-emoji">${r.emoji}</span>
+        <div class="reward-title">${r.title}</div>
+        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">${r.desc}</div>
+        <div class="reward-req">${r.req}</div>
+        ${unlocked
+          ? `<span class="reward-unlocked-badge">✓ UNLOCKED!</span>`
+          : `<span class="reward-lock">🔒</span>`
+        }
+      </div>
+    `;
+  }).join('');
+}
+
+// ============ POPUP ============
+function showPopup(emoji, title, body, xp) {
+  document.getElementById('popupEmoji').textContent = emoji;
+  document.getElementById('popupTitle').textContent = title;
+  document.getElementById('popupBody').textContent = body;
+  document.getElementById('popupXp').textContent = xp;
+  document.getElementById('popupOverlay').classList.add('show');
+}
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('show');
+}
+
+// ============ TABS ============
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+init();
+</script>
+
+
+</body></html>
