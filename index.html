@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)file:///C:/Users/hbant/Downloads/baseball-trainer_1.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⚾ Baseball Hero Trainer</title>
-<link href="./⚾ Baseball Hero Trainer_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --red: #E63946;
@@ -700,10 +700,10 @@
     <div class="xp-section">
       <div class="xp-label">
         <span>🌟 XP Points</span>
-        <span id="xpLabel">15 / 100 XP</span>
+        <span id="xpLabel">0 / 100 XP</span>
       </div>
       <div class="xp-bar-bg">
-        <div class="xp-bar-fill" id="xpBar" style="width: 15%;"></div>
+        <div class="xp-bar-fill" id="xpBar" style="width: 0%"></div>
       </div>
     </div>
   </div>
@@ -712,7 +712,7 @@
   <div class="stats-row">
     <div class="stat-card" data-emoji="🏆">
       <div class="stat-label">Total XP</div>
-      <div class="stat-value" id="totalXP">15</div>
+      <div class="stat-value" id="totalXP">0</div>
       <div class="stat-sub">Keep going!</div>
     </div>
     <div class="stat-card" data-emoji="📅">
@@ -733,42 +733,7 @@
   </div>
 
   <!-- WEEK GRID -->
-  <div class="week-grid" id="weekGrid">
-    <div class="week-day ">
-      <div class="week-day-name">SUN</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">MON</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">TUE</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">WED</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">THU</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">FRI</div>
-      <div class="week-day-icon">⬜</div>
-    </div>
-  
-    <div class="week-day ">
-      <div class="week-day-name">SAT</div>
-      <div class="week-day-icon">⚾</div>
-    </div>
-  </div>
+  <div class="week-grid" id="weekGrid"></div>
 
   <!-- SKILL BARS -->
   <div class="skill-section">
@@ -790,27 +755,27 @@
     </div>
     <div class="skill-row">
       <div class="skill-name">🧠 Focus</div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill focus" id="skillFocus" style="width: 8%;"></div></div>
-      <div class="skill-num" id="skillFocusNum">8</div>
+      <div class="skill-bar-bg"><div class="skill-bar-fill focus" id="skillFocus" style="width:0%"></div></div>
+      <div class="skill-num" id="skillFocusNum">0</div>
     </div>
   </div>
 
   <!-- TABS -->
   <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab(&#39;missions&#39;)">🗺️ MISSIONS</button>
-    <button class="tab-btn" onclick="switchTab(&#39;log&#39;)">📝 LOG SESSION</button>
-    <button class="tab-btn" onclick="switchTab(&#39;history&#39;)">📊 HISTORY</button>
-    <button class="tab-btn" onclick="switchTab(&#39;rewards&#39;)">🏆 REWARDS</button>
+    <button class="tab-btn active" onclick="switchTab('missions')">🗺️ MISSIONS</button>
+    <button class="tab-btn" onclick="switchTab('log')">📝 LOG SESSION</button>
+    <button class="tab-btn" onclick="switchTab('history')">📊 HISTORY</button>
+    <button class="tab-btn" onclick="switchTab('rewards')">🏆 REWARDS</button>
   </div>
 
   <!-- TAB: MISSIONS -->
   <div class="tab-content active" id="tab-missions">
 
-    <div style="margin-bottom:10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+    <div style="margin-bottom:10px; font-family:'Press Start 2P',monospace; font-size:9px; color:var(--blue-light);">
       🎯 POP FLY MISSIONS
     </div>
 
-    <div class="mission-card" id="m1" onclick="completeMission(&#39;m1&#39;, 20, &#39;pop&#39;)">
+    <div class="mission-card" id="m1" onclick="completeMission('m1', 20, 'pop')">
       <div class="mission-header">
         <span class="mission-icon">👀</span>
         <span class="mission-title">Track the Ball</span>
@@ -820,7 +785,7 @@
       <div class="mission-tip">💡 Tip: Keep your eyes on the ball like a Pokémon Trainer locked onto a battle!</div>
     </div>
 
-    <div class="mission-card" id="m2" onclick="completeMission(&#39;m2&#39;, 25, &#39;pop&#39;)">
+    <div class="mission-card" id="m2" onclick="completeMission('m2', 25, 'pop')">
       <div class="mission-header">
         <span class="mission-icon">🏃</span>
         <span class="mission-title">Move Your Feet!</span>
@@ -830,7 +795,7 @@
       <div class="mission-tip">💡 Tip: Get there early — like arriving at the Pokémon Center before you need it!</div>
     </div>
 
-    <div class="mission-card" id="m3" onclick="completeMission(&#39;m3&#39;, 30, &#39;pop&#39;)">
+    <div class="mission-card" id="m3" onclick="completeMission('m3', 30, 'pop')">
       <div class="mission-header">
         <span class="mission-icon">☀️</span>
         <span class="mission-title">Sun Blinder Challenge</span>
@@ -840,11 +805,11 @@
       <div class="mission-tip">💡 Tip: Use your glove hand like a visor. Pro move right here!</div>
     </div>
 
-    <div style="margin: 16px 0 10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+    <div style="margin: 16px 0 10px; font-family:'Press Start 2P',monospace; font-size:9px; color:var(--blue-light);">
       💪 THROWING MISSIONS
     </div>
 
-    <div class="mission-card" id="m4" onclick="completeMission(&#39;m4&#39;, 20, &#39;throw&#39;)">
+    <div class="mission-card" id="m4" onclick="completeMission('m4', 20, 'throw')">
       <div class="mission-header">
         <span class="mission-icon">🎯</span>
         <span class="mission-title">Target Practice</span>
@@ -854,7 +819,7 @@
       <div class="mission-tip">💡 Tip: Step toward your target as you throw — like lunging in a Pokémon battle!</div>
     </div>
 
-    <div class="mission-card" id="m5" onclick="completeMission(&#39;m5&#39;, 25, &#39;throw&#39;)">
+    <div class="mission-card" id="m5" onclick="completeMission('m5', 25, 'throw')">
       <div class="mission-header">
         <span class="mission-icon">🔁</span>
         <span class="mission-title">Quick Release Drill</span>
@@ -864,7 +829,7 @@
       <div class="mission-tip">💡 Tip: As soon as you catch it, move your arm back — no waiting!</div>
     </div>
 
-    <div class="mission-card" id="m6" onclick="completeMission(&#39;m6&#39;, 35, &#39;throw&#39;)">
+    <div class="mission-card" id="m6" onclick="completeMission('m6', 35, 'throw')">
       <div class="mission-header">
         <span class="mission-icon">💥</span>
         <span class="mission-title">Long Bomb!</span>
@@ -874,21 +839,21 @@
       <div class="mission-tip">💡 Tip: Use your whole body, not just your arm. Rotate like a spinning top!</div>
     </div>
 
-    <div style="margin: 16px 0 10px; font-family:&#39;Press Start 2P&#39;,monospace; font-size:9px; color:var(--blue-light);">
+    <div style="margin: 16px 0 10px; font-family:'Press Start 2P',monospace; font-size:9px; color:var(--blue-light);">
       🌟 BONUS MISSIONS
     </div>
 
-    <div class="mission-card completed" id="m7" onclick="completeMission(&#39;m7&#39;, 15, &#39;focus&#39;)">
+    <div class="mission-card" id="m7" onclick="completeMission('m7', 15, 'focus')">
       <div class="mission-header">
         <span class="mission-icon">🧘</span>
-        <span class="mission-title">Breathe &amp; Focus</span>
+        <span class="mission-title">Breathe & Focus</span>
         <span class="mission-xp">+15 XP</span>
       </div>
       <div class="mission-desc">Before practice, do 5 deep breaths. Breathe in for 4 counts, out for 4. This powers up your FOCUS stat!</div>
       <div class="mission-tip">💡 Tip: Even pro players use breathing to calm down before a big catch!</div>
     </div>
 
-    <div class="mission-card" id="m8" onclick="completeMission(&#39;m8&#39;, 20, &#39;speed&#39;)">
+    <div class="mission-card" id="m8" onclick="completeMission('m8', 20, 'speed')">
       <div class="mission-header">
         <span class="mission-icon">⚡</span>
         <span class="mission-title">Outfield Sprint</span>
@@ -907,115 +872,42 @@
       <div style="font-size:12px; color:var(--gray); margin-bottom:14px;">Check off every drill you completed today!</div>
 
       <div class="drills-grid" id="drillsGrid">
-    <div class="drill-check" id="dc-d1" onclick="toggleDrill(&#39;d1&#39;)">
-      <span class="drill-emoji">👀</span>
-      <span class="drill-label">Ball Tracking (10x)</span>
-      <span class="drill-xp-tag">+15</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d2" onclick="toggleDrill(&#39;d2&#39;)">
-      <span class="drill-emoji">🏃</span>
-      <span class="drill-label">Move Your Feet (10x)</span>
-      <span class="drill-xp-tag">+15</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d3" onclick="toggleDrill(&#39;d3&#39;)">
-      <span class="drill-emoji">☀️</span>
-      <span class="drill-label">Sun Shade Catch (5x)</span>
-      <span class="drill-xp-tag">+10</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d4" onclick="toggleDrill(&#39;d4&#39;)">
-      <span class="drill-emoji">🎯</span>
-      <span class="drill-label">Target Practice (15x)</span>
-      <span class="drill-xp-tag">+15</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d5" onclick="toggleDrill(&#39;d5&#39;)">
-      <span class="drill-emoji">🔁</span>
-      <span class="drill-label">Quick Release (10x)</span>
-      <span class="drill-xp-tag">+15</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d6" onclick="toggleDrill(&#39;d6&#39;)">
-      <span class="drill-emoji">💥</span>
-      <span class="drill-label">Long Bomb Throws (8x)</span>
-      <span class="drill-xp-tag">+20</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d7" onclick="toggleDrill(&#39;d7&#39;)">
-      <span class="drill-emoji">⚡</span>
-      <span class="drill-label">Outfield Sprints (4x)</span>
-      <span class="drill-xp-tag">+10</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d8" onclick="toggleDrill(&#39;d8&#39;)">
-      <span class="drill-emoji">🧘</span>
-      <span class="drill-label">Breathing Focus (5x)</span>
-      <span class="drill-xp-tag">+5</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d9" onclick="toggleDrill(&#39;d9&#39;)">
-      <span class="drill-emoji">🤸</span>
-      <span class="drill-label">Warm-Up Stretches</span>
-      <span class="drill-xp-tag">+5</span>
-    </div>
-  
-    <div class="drill-check" id="dc-d10" onclick="toggleDrill(&#39;d10&#39;)">
-      <span class="drill-emoji">📖</span>
-      <span class="drill-label">Watch Game Film</span>
-      <span class="drill-xp-tag">+10</span>
-    </div>
-  </div>
+        <!-- filled by JS -->
+      </div>
 
       <div class="rate-row">
         <div class="rate-group">
           <label>Pop Fly Catches</label>
-          <div class="rate-stars" id="stars-pop">
-      <span class="star-btn" onclick="setStar(&#39;pop&#39;,1)" id="star-pop-1">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;pop&#39;,2)" id="star-pop-2">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;pop&#39;,3)" id="star-pop-3">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;pop&#39;,4)" id="star-pop-4">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;pop&#39;,5)" id="star-pop-5">⭐</span>
-    </div>
+          <div class="rate-stars" id="stars-pop"></div>
         </div>
         <div class="rate-group">
           <label>Throwing Accuracy</label>
-          <div class="rate-stars" id="stars-throw">
-      <span class="star-btn" onclick="setStar(&#39;throw&#39;,1)" id="star-throw-1">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;throw&#39;,2)" id="star-throw-2">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;throw&#39;,3)" id="star-throw-3">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;throw&#39;,4)" id="star-throw-4">⭐</span>
-    
-      <span class="star-btn" onclick="setStar(&#39;throw&#39;,5)" id="star-throw-5">⭐</span>
-    </div>
+          <div class="rate-stars" id="stars-throw"></div>
         </div>
       </div>
 
       <div style="margin-bottom:14px;">
         <label style="font-size:11px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:6px;">How did you feel today?</label>
         <div style="display:flex; gap:8px; flex-wrap:wrap;" id="moodRow">
-          <button class="mood-btn" onclick="setMood(this,&#39;😄 Great!&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😄 Great!</button>
-          <button class="mood-btn" onclick="setMood(this,&#39;😐 Okay&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😐 Okay</button>
-          <button class="mood-btn" onclick="setMood(this,&#39;😤 Tough&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😤 Tough</button>
-          <button class="mood-btn" onclick="setMood(this,&#39;🔥 On Fire!&#39;)" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">🔥 On Fire!</button>
+          <button class="mood-btn" onclick="setMood(this,'😄 Great!')" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😄 Great!</button>
+          <button class="mood-btn" onclick="setMood(this,'😐 Okay')" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😐 Okay</button>
+          <button class="mood-btn" onclick="setMood(this,'😤 Tough')" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">😤 Tough</button>
+          <button class="mood-btn" onclick="setMood(this,'🔥 On Fire!')" style="background:var(--darker);border:2px solid var(--panel2);border-radius:8px;padding:8px 12px;color:white;cursor:pointer;font-size:12px;transition:all 0.2s;">🔥 On Fire!</button>
         </div>
       </div>
 
-      <button class="log-btn" onclick="logSession()">⚡ SAVE SESSION &amp; EARN XP ⚡</button>
+      <button class="log-btn" onclick="logSession()">⚡ SAVE SESSION & EARN XP ⚡</button>
     </div>
   </div>
 
   <!-- TAB: HISTORY -->
   <div class="tab-content" id="tab-history">
-    <div id="historyList"><div class="empty-state"><span class="big-emoji">📋</span>No sessions yet! Log your first training to see your history here.</div></div>
+    <div id="historyList">
+      <div class="empty-state">
+        <span class="big-emoji">📋</span>
+        No sessions yet! Log your first training to see your history here.
+      </div>
+    </div>
   </div>
 
   <!-- TAB: REWARDS -->
@@ -1024,61 +916,7 @@
       Earn XP to unlock awesome rewards! Show these to a parent to claim your prize! 🎁
     </div>
     <div class="rewards-grid" id="rewardsGrid">
-      <div class="reward-card locked">
-        <span class="reward-emoji">🎮</span>
-        <div class="reward-title">Game Time!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">30 extra minutes of video games</div>
-        <div class="reward-req">50 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">🍕</span>
-        <div class="reward-title">Pick Dinner!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">You choose what's for dinner</div>
-        <div class="reward-req">100 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">🃏</span>
-        <div class="reward-title">Pokémon Pack!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">One new Pokémon card pack</div>
-        <div class="reward-req">200 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">🎳</span>
-        <div class="reward-title">Fun Day Out!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Choose a family activity</div>
-        <div class="reward-req">300 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">👟</span>
-        <div class="reward-title">New Baseball Gear!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">New cleats or batting gloves</div>
-        <div class="reward-req">500 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">🗾</span>
-        <div class="reward-title">Japanese Night!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Japanese food &amp; a movie night</div>
-        <div class="reward-req">800 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
-    
-      <div class="reward-card locked">
-        <span class="reward-emoji">🏆</span>
-        <div class="reward-title">CHAMPION REWARD!</div>
-        <div style="font-size:11px;color:var(--gray);margin:4px 0 8px;">Something HUGE — talk to Mom/Dad!</div>
-        <div class="reward-req">1200 XP</div>
-        <span class="reward-lock">🔒</span>
-      </div>
+      <!-- filled by JS -->
     </div>
   </div>
 
@@ -1087,10 +925,10 @@
 <!-- POPUP -->
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup">
-    <span class="popup-emoji" id="popupEmoji">🎯</span>
-    <div class="popup-title" id="popupTitle">やった！ Yatta! (I did it!)</div>
-    <div class="popup-body" id="popupBody">Mission complete! Tap a mission to mark it done after you finish it in real life.</div>
-    <div class="popup-xp" id="popupXp">+15 XP</div>
+    <span class="popup-emoji" id="popupEmoji">🎉</span>
+    <div class="popup-title" id="popupTitle">MISSION COMPLETE!</div>
+    <div class="popup-body" id="popupBody">Great job out there, hero!</div>
+    <div class="popup-xp" id="popupXp">+25 XP</div>
     <button class="popup-btn" onclick="closePopup()">続ける! (KEEP GOING!)</button>
   </div>
 </div>
@@ -1446,6 +1284,5 @@ function switchTab(name) {
 
 init();
 </script>
-
-
-</body></html>
+</body>
+</html>
